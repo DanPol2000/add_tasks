@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/28 11:56:02 by marvin            #+#    #+#             */
-/*   Updated: 2021/10/28 11:56:02 by marvin           ###   ########.fr       */
+/*   Created: 2021/11/22 19:14:49 by chorse            #+#    #+#             */
+/*   Updated: 2021/11/26 18:01:07 by chorse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+int	ft_strlen(const char *s)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (s[i] != '\0')
@@ -22,32 +22,30 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char *ft_strjoin(char *cache, char *buf)
 {
-	char			*res;
-	unsigned int	i;
-	unsigned int	j;
-
-	if (!s1)
-		return ((void *)0);
-	i = 0;
-	res = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!res)
-		return ((void *)0);
-	while (i < ft_strlen(s1))
+	int  clen;
+	int  blen;
+	char *str;
+	
+	clen = 0;
+	blen = 0;
+	if (cache == NULL)
 	{
-		res[i] = s1[i];
-		i++;
+		cache = (char *)malloc(sizeof(char));
+		if (!cache)
+			return (NULL);
+		cache[0] = '\0';
 	}
-	j = 0;
-	while (j < ft_strlen(s2))
-	{
-		res[i] = s2[j];
-		i++;
-		j++;
-	}
-	res[i] = '\0';
-	return (res);
+	clen = ft_strlen(cache);
+	blen = ft_strlen(buf);
+	str = (char *)malloc(sizeof(char) * (clen + blen + 1));
+	if (!str)
+		return (NULL);
+	ft_strcpy(str, cache, clen);
+	ft_strcpy(&str[clen], buf, blen + 1);
+	free(cache);
+	return (str);
 }
 
 char	*ft_strchr(const char *s, int c)
@@ -66,63 +64,15 @@ char	*ft_strchr(const char *s, int c)
 	return ((void *)0);
 }
 
-static void	*ft_memcpy(void *dst, const void *src, size_t n)
+
+void	ft_strcpy(char *dest, char *src, int len)
 {
-	unsigned char		*d;
-	unsigned const char	*s;
-	size_t				i;
+	int i;
 
 	i = 0;
-	d = dst;
-	s = src;
-	if (d == s)
-		return (dst);
-	while (i < n)
+	while ((dest[i] || src[i]) && len--)
 	{
-		d[i] = s[i];
-		i++;
-	}
-	return (dst);
-}
-
-char	*ft_strdup(const char *s1)
-{
-	char	*res;
-	size_t	size;
-
-	size = ft_strlen(s1);
-	res = malloc(size + 1);
-	if (!res)
-		return ((void *)0);
-	ft_memcpy(res, s1, size + 1);
-	return (res);
-}
-
-void	*ft_calloc(size_t num, size_t size)
-{
-	void	*arr;
-
-	if (!size || !num)
-	{
-		size = 1;
-		num = 1;
-	}
-	if (!(arr = malloc(size * num)))
-		return (NULL);
-	ft_bzero(arr, size * num);
-	return (arr);
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	char	*str;
-	size_t	i;
-
-	str = (char *)s;
-	i = 0;
-	while (i < n)
-	{
-		str[i] = '\0';
+		dest[i] = src[i];
 		i++;
 	}
 }
