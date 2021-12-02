@@ -6,7 +6,7 @@
 /*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:01:37 by chorse            #+#    #+#             */
-/*   Updated: 2021/12/02 13:33:28 by chorse           ###   ########.fr       */
+/*   Updated: 2021/12/02 16:54:21 by chorse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 
-#define BUFFER_SIZE 1
+//#define BUFFER_SIZE 1
 int		ft_strlen(const char *s);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strchr(const char *s, int c);

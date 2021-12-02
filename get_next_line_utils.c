@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/22 19:14:49 by chorse            #+#    #+#             */
-/*   Updated: 2021/12/02 12:28:51 by chorse           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "get_next_line.h"
 
 int	ft_strlen(const char *s)
@@ -44,7 +32,7 @@ char	*ft_strjoin(char *cache, char *buf)
 		return (NULL);
 	ft_strcpy(str, cache, clen);
 	ft_strcpy(&str[clen], buf, blen + 1);
-	str[clen + blen + 1] = '\0';
+	str[clen + blen] = '\0';
 	free(cache);
 	cache = NULL;
 	return (str);

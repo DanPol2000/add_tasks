@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/24 16:26:15 by chorse            #+#    #+#             */
-/*   Updated: 2021/12/02 13:33:23 by chorse           ###   ########.fr       */
+/*   Created: 2021/12/02 16:10:48 by chorse            #+#    #+#             */
+/*   Updated: 2021/12/02 16:56:05 by chorse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*ft_ost(char *ost)
 	ft_strcpy(line, &ost[i + 1], ft_strlen(&ost[i]));
 	line[ft_strlen(&ost[i + 1])] = '\0';
 	free(ost);
+	ost = NULL;
 	return (line);
 }
 
@@ -48,7 +49,7 @@ char	*ft_line(char *ost)
 		while (ost[i] != '\n' && ost[i])
 			i++;
 		i++;
-		line = malloc((i) * sizeof(char));
+		line = malloc((i + 1) * sizeof(char));
 		if (!line)
 			return (NULL);
 		ft_strcpy(line, ost, i);
@@ -97,7 +98,7 @@ char	*get_next_line(int fd)
 {
 	char		*res;
 	static char	*ost;
-	char *tmp;
+	// char *tmp;
 
 	if(!ost)
 		ost = NULL;
@@ -105,21 +106,22 @@ char	*get_next_line(int fd)
 	if ((fd < 0 ) || (BUFFER_SIZE <= 0))
 		return (NULL);
 	ost = ft_read(fd, ost);
-	tmp = ost;
 	if (ost)
 	{
 		res = ft_line(ost);
+		// tmp = ost;
 		ost = ft_ost(ost);
+		// free(tmp);
 	}
-	tmp = ost;
 	return (res);
 }
 
-int main()
-{
-    int fd;
+// int main()
+// {
+//     int fd;
     
-    fd = open("text.txt", O_RDONLY);
-    printf("res(1) = %s\n", get_next_line(fd));
-	printf("res(3) = %s\n", get_next_line(fd));
-}
+//     fd = open("text.txt", O_RDONLY);
+//     printf("res(1) = %s\n", get_next_line(fd));
+// 	printf("res(2) = %s\n", get_next_line(fd));
+// 	printf("res(3) = %s\n", get_next_line(fd));
+// }
