@@ -6,7 +6,7 @@
 /*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 19:14:49 by chorse            #+#    #+#             */
-/*   Updated: 2021/11/26 18:01:07 by chorse           ###   ########.fr       */
+/*   Updated: 2021/12/02 12:28:51 by chorse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ int	ft_strlen(const char *s)
 	return (i);
 }
 
-char *ft_strjoin(char *cache, char *buf)
+char	*ft_strjoin(char *cache, char *buf)
 {
-	int  clen;
-	int  blen;
-	char *str;
-	
+	int		clen;
+	int		blen;
+	char	*str;
+
 	clen = 0;
 	blen = 0;
 	if (cache == NULL)
@@ -44,7 +44,9 @@ char *ft_strjoin(char *cache, char *buf)
 		return (NULL);
 	ft_strcpy(str, cache, clen);
 	ft_strcpy(&str[clen], buf, blen + 1);
+	str[clen + blen + 1] = '\0';
 	free(cache);
+	cache = NULL;
 	return (str);
 }
 
@@ -64,10 +66,9 @@ char	*ft_strchr(const char *s, int c)
 	return ((void *)0);
 }
 
-
 void	ft_strcpy(char *dest, char *src, int len)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while ((dest[i] || src[i]) && len--)

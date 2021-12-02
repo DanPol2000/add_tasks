@@ -6,7 +6,7 @@
 /*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 16:26:15 by chorse            #+#    #+#             */
-/*   Updated: 2021/11/27 18:17:50 by chorse           ###   ########.fr       */
+/*   Updated: 2021/12/02 13:33:23 by chorse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	*ft_ost(char *ost)
 	if (!ost[i])
 	{
 		free(ost);
+		ost = NULL;
 		return (NULL);
 	}
 	line = malloc((ft_strlen(&ost[i + 1]) + 1) * sizeof(char));
@@ -60,7 +61,9 @@ char	*ft_read(int fd, char *ost)
 {
 	char	*buf;
 	int		n_read;
-
+	// char	ch;
+	// if (read(fd, &ch, 0) < 0)
+	// 	return (NULL);
 	buf = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buf)
 		return (NULL);
@@ -86,6 +89,7 @@ char	*ft_read(int fd, char *ost)
 			break ;
 	}
 	free(buf);
+	buf = NULL;
 	return (ost);
 }
 
@@ -93,16 +97,21 @@ char	*get_next_line(int fd)
 {
 	char		*res;
 	static char	*ost;
+	char *tmp;
 
+	if(!ost)
+		ost = NULL;
 	res = NULL;
 	if ((fd < 0 ) || (BUFFER_SIZE <= 0))
 		return (NULL);
 	ost = ft_read(fd, ost);
+	tmp = ost;
 	if (ost)
 	{
 		res = ft_line(ost);
 		ost = ft_ost(ost);
 	}
+	tmp = ost;
 	return (res);
 }
 
@@ -112,5 +121,5 @@ int main()
     
     fd = open("text.txt", O_RDONLY);
     printf("res(1) = %s\n", get_next_line(fd));
-	printf("res(2) = %s\n", get_next_line(fd));
+	printf("res(3) = %s\n", get_next_line(fd));
 }
