@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aregenia <aregenia@student.21-school.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/10 15:41:17 by chorse            #+#    #+#             */
-/*   Updated: 2021/12/10 16:56:48 by chorse           ###   ########.fr       */
+/*   Created: 2021/10/10 01:35:32 by aregenia          #+#    #+#             */
+/*   Updated: 2021/10/10 01:35:34 by aregenia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,12 @@ int	ft_printf(const char *str, ...)
     va_list args;
     int i;
     int cnt;
-	t_flag flag;
 
     i = 0;
 	cnt = 0;
 	if (str == NULL)
 		return (-1);
     va_start(args, str);
-	ft_flag(&flag);
     while (str[i])
     {
 		while (str[i] != '%' && str[i])
@@ -35,14 +33,14 @@ int	ft_printf(const char *str, ...)
 		}
 		if (!str[i])
 			return (cnt);
-        if (str[i] == '%')
+        if (str[i] == '%' && ft_strchr("cspdiuxX%", str[i + 1]))
 		{
 			if (str[i + 1] == ' ');
 			{
 				ft_putchar_fd(str[i], 1);
 				cnt++;
 			}
-			ft_parse(str, &flag, args, i);
+			cnt += ft_conv(str, &flag, args, i);
 		}
         i++;
     }
@@ -50,23 +48,24 @@ int	ft_printf(const char *str, ...)
     return (cnt);
 }
 
-void	ft_flag(t_flag *flag)
-{
-	flag->type = 0;
-	flag->width = 0;
-	flag->minus = 0;
-	flag->zero = 0;
-	flag->precision = -1; 
-	flag->star = 0;
-}
 
-
-int	ft_parse(const char *str, t_flag *flag, va_list args, int i)
+int	ft_conv(int c, va_list args)
 {
-	while (str[i])
+	if (c == 'c' || c == 's')
+		return (ft_putstr_fd(args, 1));
+	if (c == 'p')
+		return (str = ft_itoa());
+	if (c == 'd' || c == 'i')
+		return (ft_putnmbr((va_arg(args, int)));
+	if (c == 'u')
+		return (ft_itoa(args));
+	if (c == 'x' || c == 'X')
+		return (ft_itoa(c, args));
+	if (c == '%')
 	{
-		if (str[i] == 0)
-			flag->zero = 1;
-		
+		ft_putchar_fd('%', 1);
+		return (1);
 	}
+	return (0);
 }
+
