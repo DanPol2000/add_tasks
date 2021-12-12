@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aregenia <aregenia@student.21-school.      +#+  +:+       +#+        */
+/*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/10 01:35:32 by aregenia          #+#    #+#             */
-/*   Updated: 2021/10/10 01:35:34 by aregenia         ###   ########.fr       */
+/*   Created: 2021/12/10 15:41:17 by chorse            #+#    #+#             */
+/*   Updated: 2021/12/12 19:38:12 by chorse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,38 +34,13 @@ int	ft_printf(const char *str, ...)
 		if (!str[i])
 			return (cnt);
         if (str[i] == '%' && ft_strchr("cspdiuxX%", str[i + 1]))
-		{
-			if (str[i + 1] == ' ');
-			{
-				ft_putchar_fd(str[i], 1);
-				cnt++;
-			}
-			cnt += ft_conv(str, &flag, args, i);
+		{	
+			i++;
+			cnt += ft_conv(str[i], args);
 		}
         i++;
     }
     va_end(args);
     return (cnt);
-}
-
-
-int	ft_conv(int c, va_list args)
-{
-	if (c == 'c' || c == 's')
-		return (ft_putstr_fd(args, 1));
-	if (c == 'p')
-		return (str = ft_itoa());
-	if (c == 'd' || c == 'i')
-		return (ft_putnmbr((va_arg(args, int)));
-	if (c == 'u')
-		return (ft_itoa(args));
-	if (c == 'x' || c == 'X')
-		return (ft_itoa(c, args));
-	if (c == '%')
-	{
-		ft_putchar_fd('%', 1);
-		return (1);
-	}
-	return (0);
 }
 
