@@ -6,7 +6,7 @@
 /*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:26:41 by chorse            #+#    #+#             */
-/*   Updated: 2021/12/12 20:39:01 by chorse           ###   ########.fr       */
+/*   Updated: 2021/12/13 17:48:51 by chorse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	ft_itoa(long long int n, int base, int low)
 		if (ft_check(x, base))
 			str[i] = x % base + 7 + low + '0'; 
 		else
-			str[i] = x % base + low + '0';	   		
+			str[i] = x % base + '0';	   		
 		x = x / base;
 		i--;
 	}
@@ -85,13 +85,3 @@ int	ft_check(long long int x, int base)
 	return (0);
 }
 
-int main()
-{
-	int d = -12345;
-	int base = 16;
-	int low = 0;
-	int e;
-	e = ft_forx(d, base, low);
-	printf(" %d ", e);
-	printf(" %x", d);
-}
