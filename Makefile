@@ -1,46 +1,32 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: chorse <chorse@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/12/14 16:42:30 by chorse            #+#    #+#              #
-#    Updated: 2021/12/14 16:42:31 by chorse           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME = push_swap
 
-NAME= libftprintf.a
+CFILES =	
 
-SRCFILES=	ft_putnbr_fd.c			\
-			ft_putstr_fd.c			\
-			ft_putchar_fd.c			\
-			ft_itoa.c		        \
-			ft_conv.c		        \
-			ft_strchr.c		        \
-			ft_strlen.c             \
-			ft_printf.c
+OBJECTS = $(CFILES:.c=.o)
 
-HEADFILES=	ft_printf.h
+LIB_PATH = libft/
 
-OBJFILES= ${SRCFILES:.c=.o}
+CC = gcc
 
-CC= gcc
+CFLAGS = -Wall -Wextra -Werror
 
-%.o:	%.c ${HEADFILES}
-		${CC} -Wall -Wextra -Werror -c $< -o $@
+all: subsystem $(NAME)
 
-${NAME}:	${OBJFILES}
-		${AR} rcs $@ ${OBJFILES}
+subsystem:
+	make -C $(LIB_PATH) all
 
-all: ${NAME}
+$(NAME): $(OBJECTS)
+	$(CC) $(CFLAGS) $(OBJECTS) $(LIB_PATH)libft.a -o $(NAME)
 
-clean: 
-	${RM} ${OBJFILES}
+clean:
+	make -C $(LIB_PATH) clean
+	rm -f $(OBJECTS)
 
 fclean: clean
-	${RM} ${NAME}
+	make -C $(LIB_PATH) fclean
+	rm -f $(NAME)
 
 re: fclean all
-        
-.PHONY: all clean fclean re 
+
+call: all clean
+	make -C $(LIB_PATH) fclean
