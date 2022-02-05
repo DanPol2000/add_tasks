@@ -1,75 +1,82 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_begin.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/05 12:15:49 by chorse            #+#    #+#             */
+/*   Updated: 2022/02/05 13:46:00 by chorse           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int	ft_is_repeat(int num, char **argv, int i)
+t_list    *ft_get_last(t_list *head)
 {
-	i++;
-	while (argv[i])
-	{
-		if (ft_atoi(argv[i]) == num)
-			return (1);
-		i++;
-	}
-	return (0);
+    if (!head)
+        return (NULL);
+    while (head -> next)
+        head = head -> next;
+    return (head);
 }
 
-static int	ft_isnum(char *num)
+void    ft_add_elem_back(t_list **stack, t_list *new_elem)
+{
+    t_list    *temp;
+
+    if (!new_elem)
+        return ;
+    if (*stack)
+    {
+        temp = ft_get_last(*stack);
+        temp -> next = new_elem;
+    }
+    else
+        *stack = new_elem;
+}
+
+t_list    *ft_create_elem(int num)
+{
+    t_list    *new_elem;
+
+    new_elem = (t_list *) malloc(sizeof(t_list));
+    if (!new_elem)
+        return (NULL);
+    new_elem -> num = num;
+    new_elem -> next = NULL;
+    return (new_elem);
+}
+
+void    ft_fill_stack(t_list **stack, int argc, char **argv)
+{
+    t_list    *new;
+    int        i;
+
+    i = 0;
+    if (argc == 2)
+        argv = ft_split(argv[1], ' ');
+    else
+        i = 1;
+    while (argv[i])
+    {
+        new = ft_create_elem(ft_atoi(argv[i]));
+        ft_add_elem_back(stack, new);
+        i++;
+    }
+	if (argc == 2)
+		ft_freee(argv);
+}
+
+void	ft_freee(char **str)
 {
 	int	i;
 
 	i = 0;
-	if (num[0] == '-')
-		i++;
-	while (num[i])
+	while (str[i])
 	{
-		if (!ft_isdigit(num[i]))
-			return (0);
+		free(str[i]);
 		i++;
 	}
-	return (1);
-}
-
-void	ft_check_args(int argc, char **argv)
-{
-	int		i;
-	long	tmp;	
-
-	i = 0;
-	if (argc == 2)
-	{
-		argv = ft_split(argv[1], ' ');
-		if (!*argv)
-			exit(0);
-	}
-	else
-		i = 1;
-	while (argv[i])
-	{
-		tmp = ft_atoi(argv[i]);
-		// if (!ft_isnum(argv[i]))
-			// ft_error_msg("Error: Only numbers are allowed!");
-		// if (ft_is_repeat(tmp, argv, i))
-			// ft_error_msg("Error: Numbers should not be repeated!");
-		// if (tmp < INT32_MIN || tmp > INT32_MAX)
-			// ft_error_msg("Error: The entered number is too big!");
-		i++;
-	}
-}
-
-
-int	check_sorted(t_list *stack_a)
-{
-	int	flag;
-	int	length;
-
-	flag = 0;
-	length = ft_lstsize(stack_a);
-	while (length > 1)
-	{
-		if (stack_a->num > stack_a->next->next)
-			return (1);
-		stack_a = stack_a->next;
-		length--;
-	}
-	return (0);
+	free(str);
 }

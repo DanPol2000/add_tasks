@@ -6,14 +6,14 @@
 /*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 14:00:12 by chorse            #+#    #+#             */
-/*   Updated: 2022/01/30 14:00:13 by chorse           ###   ########.fr       */
+/*   Updated: 2022/02/05 12:55:57 by chorse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "push_swap.h"
 
-static int	ft_isspac(int	c)
+static int	ft_issp(int	c)
 {
 	if (c == '\f' || c == '\n' || c == '\t' || c == '\r'
 		|| c == '\v' || c == ' ')
@@ -38,7 +38,7 @@ int	ft_atoi(const char	*str)
 
 	min = 1;
 	numb = 0;
-	while (ft_isspac(*str))
+	while (ft_issp(*str))
 		str++;
 	if (ft_plus((char *)str))
 		return (0);

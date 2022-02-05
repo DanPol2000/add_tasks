@@ -6,46 +6,39 @@
 /*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 15:34:26 by chorse            #+#    #+#             */
-/*   Updated: 2022/01/30 14:50:49 by chorse           ###   ########.fr       */
+/*   Updated: 2022/02/05 13:59:08 by chorse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_list	*ft_fill_list(int argc, char **input)
+void	ft_check_args(int argc, char **argv)
 {
 	int		i;
-	t_list	*head;
-	t_list	*temp;
+	long	tmp;	
 
 	i = 0;
-	head = NULL;
-	while (i < argc)
+	if (argc == 2)
 	{
-		temp = ft_lstnew(ft_atoi(input[i]));
-		if (temp == NULL)
-		{
-			ft_lstfree(&head);
-			break ;
-		}
-		ft_lst_add_back(&head, temp);
+		argv = ft_split(argv[1], ' ');
+		if (!*argv)
+			exit(0);
+	}
+	else
+		i = 1;
+	while (argv[i])
+	{
+		tmp = ft_atoi(argv[i]);
+		if (!ft_isnum(argv[i]))
+			write(1, "Error", 7);
+		if (ft_is_repeat(tmp, argv, i))
+			write(1, "Error", 7);
+		if (tmp < INT32_MIN || tmp > INT32_MAX)
+			write(1, "Error", 7);
 		i++;
 	}
-	ft_free_array(input);
-	return (head);
+	if (argc == 2)
+		ft_freee(argv);
 }
 
-void	ft_lst_add_back(t_list **head, t_list *new)
-{
-	t_list	*current;
 
-	if (*head == NULL)
-		*head = new;
-	else
-	{
-		current = *head;
-		while (current->next != NULL)
-			current = current->next;
-		current->next = new;
-	}
-}

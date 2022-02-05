@@ -6,7 +6,7 @@
 /*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 12:58:10 by chorse            #+#    #+#             */
-/*   Updated: 2022/01/30 13:59:57 by chorse           ###   ########.fr       */
+/*   Updated: 2022/02/05 13:40:15 by chorse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ static int	ft_len(char const *s, char c)
 	return (cnt);
 }
 
+static void	ft_fre(char **mass, int len)
+{
+	while (len-- >= 0)
+		free(mass[len]);
+	free(mass);
+}
+
 static char	*word_cr(char const *s, int j, char c, char **mass)
 {
 	char	*str;
@@ -66,12 +73,6 @@ static char	*word_cr(char const *s, int j, char c, char **mass)
 	return (str);
 }
 
-static void	ft_fre(char **mass, int len)
-{
-	while (len-- >= 0)
-		free(mass[len]);
-	free(mass);
-}
 
 char	**ft_split(char const *s, char c)
 {
