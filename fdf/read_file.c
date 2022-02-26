@@ -6,7 +6,7 @@
 /*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 14:27:43 by chorse            #+#    #+#             */
-/*   Updated: 2022/02/23 15:28:59 by chorse           ###   ########.fr       */
+/*   Updated: 2022/02/26 13:21:04 by chorse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	fill_matrix(int *z_line, char *line)
 }
 
 
-void	read_file(char *file, fdf *data)
+void	ft_read_file(char *file, fdf *data)
 {
 	int i;
 	int fd;
