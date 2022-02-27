@@ -6,7 +6,7 @@
 /*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 14:08:05 by chorse            #+#    #+#             */
-/*   Updated: 2022/02/26 15:35:36 by chorse           ###   ########.fr       */
+/*   Updated: 2022/02/27 16:21:12 by chorse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,22 @@ char	**ft_split(char const *s, char c);
 int		ft_atoi(const char	*str);
 void	ft_create_matrix(char *file_name, fdf *data);
 void	ft_read_file(char *file_name, fdf *data);
-static int	ft_generate_matrix(fdf *data, char **numbers, int i);
-int	ft_get_int(char *a);
+int		ft_get_int(char *a);
 void	bresenham(float x, float y, float x1, float y1, fdf *data);
 float	ft_mod(float a);
 float	ft_max(float a, float b);
 void	first_init(fdf *data);
 void	draw(fdf *data);
 void	ft_make_zoom(float x, float y, float x1, float y1, fdf *data);
+void	ft_isometric(float *x, float *y, int z, fdf *data);
+void	move_func(int key, fdf *data);
+void	print_menu(fdf *data);
+int		move(int key, fdf *data);
+int		zoom(int key, fdf *data);
+int		angle(int key, fdf *data);
+int		z_scale(int key, fdf *data);
+void	first_init(fdf *data);
+void	ft_free_data_struct(fdf *data);
+
 
 #endif

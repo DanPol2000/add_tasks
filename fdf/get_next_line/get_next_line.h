@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/27 15:01:37 by chorse            #+#    #+#             */
-/*   Updated: 2022/02/23 14:55:02 by chorse           ###   ########.fr       */
+/*   Created: 2022/02/27 15:59:00 by chorse            #+#    #+#             */
+/*   Updated: 2022/02/27 15:59:01 by chorse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,5 @@ char	*ft_strjoinn(char *s1, char *s2);
 char	*ft_strchr(const char *s, int c);
 char	*get_next_line(int fd);
 void	ft_strcpy(char *dest, char *src, int len);
-
 
 #endif

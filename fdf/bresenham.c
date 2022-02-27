@@ -6,20 +6,26 @@
 /*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 13:51:47 by chorse            #+#    #+#             */
-/*   Updated: 2022/02/26 16:05:13 by chorse           ###   ########.fr       */
+/*   Updated: 2022/02/27 13:20:44 by chorse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void get_color(int z, int z1, fdf *data)
+void	ft_isometric(float *x, float *y, int z, fdf *data)
+{
+	*x = (*x - *y) * cos(data->angle_cos);
+	*y = (*x + *y) * sin(data->angle_sin) - z;
+}
+
+void	get_color(int z, int z1, fdf *data)
 {
 	if (z > 0 || z1 > 0)
-		data->color = 0xFF4500;
-	if (z < 0 || z1 < 0)
+		data->color = 0x800000;
+	else if (z < 0 || z1 < 0)
 		data->color = 0x0000FF;
-	else 
-		data->color = 0x00A300;
+	else
+		data->color = 0x00ff00;
 }
 
 void	bresenham(float x, float y, float x1, float y1, fdf *data)
@@ -36,9 +42,20 @@ void	bresenham(float x, float y, float x1, float y1, fdf *data)
 	get_color(z, z1, data);
 	x *= data->zoom;
 	y *= data->zoom;
+	z *= data->z_scale;
 	x1 *= data->zoom;
 	y1 *= data->zoom;
+	z1 *= data->z_scale;
 	
+	if (data->flag)
+	{
+		ft_isometric(&x, &y, z, data);
+		ft_isometric(&x1, &y1, z1, data);
+	}
+	x += data->shift_x;
+	y += data->shift_y;
+	x1 += data->shift_x;
+	y1 += data->shift_y;
 	x_step = x1 - x;
 	y_step = y1 - y;
 	max = ft_max(ft_mod(x_step), ft_mod(y_step));
