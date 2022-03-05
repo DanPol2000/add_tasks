@@ -6,7 +6,7 @@
 /*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 14:03:09 by chorse            #+#    #+#             */
-/*   Updated: 2022/02/27 16:17:16 by chorse           ###   ########.fr       */
+/*   Updated: 2022/03/05 18:48:23 by chorse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	deal_key(int key, fdf *data)
 	if (key == ESC)
 	{
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		ft_free_data_struct(data);
 		exit(0);
 	}
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
@@ -88,20 +89,32 @@ int main(int argc, char **argv)
 {
 	fdf *data;
 	
-	if (argc == 2)
-	{
-		data = (fdf*)malloc(sizeof(fdf));
-		ft_read_file(argv[1], data);
-	}
-	else
+	if (argc != 2 || file_check(argv[1]) == 1)
 		return (0);
+	data = malloc(sizeof(fdf));
+	ft_read_file(argv[1], data);
 	first_init(data);
 	data->mlx_ptr = mlx_init();
-	data->win_ptr = mlx_new_window(data->mlx_ptr, 1600, 1000, "FDF");
+	data->win_ptr = mlx_new_window(data->mlx_ptr, 1800, 1000, "FDF");
 	draw(data);
 	print_menu(data);
 	mlx_key_hook(data->win_ptr, deal_key, data);
 	mlx_loop(data->mlx_ptr);
-	free(data);
+	free (data);
 	return (0);
+}
+
+
+void	ft_free_data_struct(fdf *data)
+{
+	int	i;
+
+	i = 0;
+	while (i <= data->height)
+	{
+		free(data->z_matrix[i]);
+		i++; 
+	}
+	free(data->z_matrix);
+	free(data);
 }

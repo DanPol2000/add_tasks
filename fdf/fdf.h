@@ -6,14 +6,14 @@
 /*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 14:08:05 by chorse            #+#    #+#             */
-/*   Updated: 2022/02/27 16:21:12 by chorse           ###   ########.fr       */
+/*   Updated: 2022/03/05 18:47:48 by chorse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-#include "get_next_line/get_next_line.h"
+#include "get_next_line.h"
 #include "stdio.h"
 #include <fcntl.h>
 #include <math.h>
@@ -48,8 +48,8 @@ typedef struct s_z_color
 
 typedef struct
 {
-	int width;
-	int height;
+	int		width;
+	int		height;
 	int **z_matrix;
 	int		zoom;
 	int		color;
@@ -59,12 +59,11 @@ typedef struct
 	int		flag;
 	int		shift_x;
 	int		shift_y;
-
 	int		scr_x;
 	int		scr_y;
 	
-	void *mlx_ptr;
-	void *win_ptr;
+	void 	*mlx_ptr;
+	void 	*win_ptr;
 }		fdf;
 
 void	freeh(char **arr);
@@ -90,6 +89,6 @@ int		angle(int key, fdf *data);
 int		z_scale(int key, fdf *data);
 void	first_init(fdf *data);
 void	ft_free_data_struct(fdf *data);
-
+int		file_check(char *file_name);
 
 #endif

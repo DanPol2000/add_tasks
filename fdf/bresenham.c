@@ -6,7 +6,7 @@
 /*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 13:51:47 by chorse            #+#    #+#             */
-/*   Updated: 2022/02/27 13:20:44 by chorse           ###   ########.fr       */
+/*   Updated: 2022/03/05 13:22:01 by chorse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,28 @@ void	ft_isometric(float *x, float *y, int z, fdf *data)
 
 void	get_color(int z, int z1, fdf *data)
 {
-	if (z > 0 || z1 > 0)
-		data->color = 0x800000;
-	else if (z < 0 || z1 < 0)
-		data->color = 0x0000FF;
-	else
-		data->color = 0x00ff00;
+	if (z > -9 || z1 > -9)
+		data->color = 0x00FF00;
+	if (z > -7 || z1 > -7)
+		data->color = 0xCAFFCA;
+	if (z > -5 || z1 > -5)
+		data->color = 0xACFFAC;
+	if (z > -3 || z1 > -3)
+		data->color = 0x97FF97;
+	if (z > -1 || z1 > -1)
+		data->color = 0x5CFF5C;
+	if (z == 0 || z1 == 0)
+		data->color = 0x00CC00;
+	if (z > 1 || z1 > 1)
+		data->color = 0x00A300;
+	if (z > 3 || z1 > 3)
+		data->color = 0x008200;
+	if (z > 5 || z1 > 5)
+		data->color = 0x006800;
+	if (z > 7 || z1 > 7)
+		data->color = 0xA30000;
+	if (z > 9 || z1 > 9)
+		data->color = 0xCC0000;
 }
 
 void	bresenham(float x, float y, float x1, float y1, fdf *data)
@@ -46,7 +62,6 @@ void	bresenham(float x, float y, float x1, float y1, fdf *data)
 	x1 *= data->zoom;
 	y1 *= data->zoom;
 	z1 *= data->z_scale;
-	
 	if (data->flag)
 	{
 		ft_isometric(&x, &y, z, data);
