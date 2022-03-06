@@ -6,21 +6,20 @@
 /*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 14:08:05 by chorse            #+#    #+#             */
-/*   Updated: 2022/03/05 18:47:48 by chorse           ###   ########.fr       */
+/*   Updated: 2022/03/06 18:50:51 by chorse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-#include "get_next_line.h"
-#include "stdio.h"
-#include <fcntl.h>
-#include <math.h>
-#include <mlx.h>
+# include "get_next_line.h"
+# include <fcntl.h>
+# include <math.h>
+# include <mlx.h>
 
-# define WIDTH			1000
-# define HEIGHT			1080
+# define WIDTH			1800
+# define HEIGHT			1000
 
 # define UP				126
 # define DOWN			125
@@ -39,18 +38,21 @@
 # define ISO_OFF		19
 # define RESET			48
 
-typedef struct s_z_color
+typedef struct s_dot
 {
-	int		z;
-	int		color;
-}	t_z_color;
+	float	x;
+	float	y;
+	float	x1;
+	float	y1;
+	float	z;
+	float	z1;
+}		t_dot;
 
-
-typedef struct
+typedef struct s_fdf
 {
 	int		width;
 	int		height;
-	int **z_matrix;
+	int		**z_matrix;
 	int		zoom;
 	int		color;
 	double	angle_cos;
@@ -61,34 +63,43 @@ typedef struct
 	int		shift_y;
 	int		scr_x;
 	int		scr_y;
-	
-	void 	*mlx_ptr;
-	void 	*win_ptr;
-}		fdf;
 
-void	freeh(char **arr);
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+
+	void	*mlx_ptr;
+	void	*win_ptr;
+}		t_fdf;
+
 int		ft_get_height(char *file);
 int		ft_get_width(char *file);
 char	**ft_split(char const *s, char c);
 int		ft_atoi(const char	*str);
-void	ft_create_matrix(char *file_name, fdf *data);
-void	ft_read_file(char *file_name, fdf *data);
-int		ft_get_int(char *a);
-void	bresenham(float x, float y, float x1, float y1, fdf *data);
-float	ft_mod(float a);
-float	ft_max(float a, float b);
-void	first_init(fdf *data);
-void	draw(fdf *data);
-void	ft_make_zoom(float x, float y, float x1, float y1, fdf *data);
-void	ft_isometric(float *x, float *y, int z, fdf *data);
-void	move_func(int key, fdf *data);
-void	print_menu(fdf *data);
-int		move(int key, fdf *data);
-int		zoom(int key, fdf *data);
-int		angle(int key, fdf *data);
-int		z_scale(int key, fdf *data);
-void	first_init(fdf *data);
-void	ft_free_data_struct(fdf *data);
+int		ft_read_file(char *file_name, t_fdf *data);
+void	bresenham(t_dot *p, t_fdf *data);
+void	first_init(t_fdf *data);
+void	draw(t_fdf *data);
+void	print_menu(t_fdf *data);
+int		move(int key, t_fdf *data);
+int		zoom_k(int key, t_fdf *data);
+int		angle(int key, t_fdf *data);
+int		z_scale(int key, t_fdf *data);
+void	ft_free_data_struct(t_fdf *data);
 int		file_check(char *file_name);
+void	get_color(t_dot *p, t_fdf *data);
+void	init_img(t_fdf *data);
+void	get_y(t_dot *p, int x, int y);
+void	get_x(t_dot *p, int x, int y);
+void	zoom(t_dot *p, t_fdf *data);
+void	shift(t_dot *p, t_fdf *data);
+void	fill_matrix(int *z_line, char *line);
+void	my_mlx_pixel_put(t_fdf *data, int x, int y, int color);
+void	ft_bzero(void *str, size_t n);
+void	action(t_fdf *data, int x, int y, t_dot *p);
+void	pixel_put(t_fdf *data, t_dot *p, float x_step, float y_step);
+void	open_fill(char *file, t_fdf *data);
 
 #endif

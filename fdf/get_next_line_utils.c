@@ -6,74 +6,86 @@
 /*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 12:40:49 by chorse            #+#    #+#             */
-/*   Updated: 2022/03/05 18:35:28 by chorse           ###   ########.fr       */
+/*   Updated: 2022/03/06 17:41:42 by chorse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlen(const char *s)
+size_t	ft_strlen(char *str)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (s[i] != '\0')
+	while (str[i] != '\0')
 		i++;
 	return (i);
 }
 
-char	*ft_strjoinn(char *cache, char *buf)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	int		clen;
-	int		blen;
 	char	*str;
+	size_t	i;
+	size_t	j;
 
-	clen = 0;
-	blen = 0;
-	if (cache == NULL)
-	{
-		cache = (char *)malloc(sizeof(char));
-		if (!cache)
-			return (NULL);
-		cache[0] = '\0';
-	}
-	clen = ft_strlen(cache);
-	blen = ft_strlen(buf);
-	str = (char *)malloc(sizeof(char) * (clen + blen + 1));
+	if (!s || len == 0)
+		return (0);
+	i = 0;
+	j = 0;
+	while (s[j] != '\0')
+		j++;
+	while (start + i < j && i < len)
+		i++;
+	if (start + i < j && i == 0)
+		i = 0;
+	str = malloc(sizeof(char) * (i + 1));
 	if (!str)
-		return (NULL);
-	ft_strcpy(str, cache, clen);
-	ft_strcpy(&str[clen], buf, blen + 1);
-	str[clen + blen] = '\0';
-	free(cache);
-	cache = NULL;
+		return (0);
+	i = 0;
+	while (start + i < j && i < len)
+	{
+		str[i] = s[start + i];
+		i++;
+	}
+	str[i] = '\0';
 	return (str);
 }
 
 char	*ft_strchr(const char *s, int c)
 {
 	size_t	i;
+	char	*str;
 
+	str = (char *)s;
 	i = 0;
-	while (s[i])
-	{
-		if ((unsigned char)s[i] == (unsigned char)c)
-			return ((char *)&s[i]);
+	while (str[i] != c && str[i] != '\0')
 		i++;
-	}
-	if (c == '\0')
-		return ((char *)&s[i]);
-	return ((void *)0);
+	if (str[i] != c)
+		return (0);
+	return (&str[i]);
 }
 
-void	ft_strcpy(char *dest, char *src, int len)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int	i;
+	size_t	i;
+	size_t	j;
+	char	*str;
 
+	if (!s1 || !s2)
+		return (0);
 	i = 0;
-	while ((dest[i] || src[i]) && len--)
-	{
-		dest[i] = src[i];
+	j = 0;
+	while (s1[i] != '\0')
 		i++;
-	}
+	while (s2[j] != '\0')
+		j++;
+	str = malloc(sizeof(char) * (i + j + 1));
+	if (!str)
+		return (0);
+	while (*s1 != '\0')
+		*str++ = *s1++;
+	while (*s2 != '\0')
+		*str++ = *s2++;
+	*str++ = '\0';
+	return (str - (i + j + 1) * sizeof(char));
 }

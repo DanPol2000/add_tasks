@@ -6,14 +6,13 @@
 /*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:25:40 by chorse            #+#    #+#             */
-/*   Updated: 2022/02/23 12:59:54 by chorse           ###   ########.fr       */
+/*   Updated: 2022/03/06 18:53:06 by chorse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "fdf.h"
 
-static int	ft_isspace(int	c)
+static int	ft_isspace(int c)
 {
 	if (c == '\f' || c == '\n' || c == '\t' || c == '\r'
 		|| c == '\v' || c == ' ')
@@ -58,4 +57,25 @@ int	ft_atoi(const char	*str)
 		numb = (numb * 10) + *str++ - '0';
 	}
 	return (numb * min);
+}
+
+void	open_fill(char *file, t_fdf *data)
+{
+	int		fd;
+	int		i;
+	char	*line;
+
+	fd = open(file, O_RDONLY, 0);
+	if (fd < 0)
+		return ;
+	i = 0;
+	line = get_next_line(fd);
+	while (line)
+	{
+		fill_matrix(data->z_matrix[i++], line);
+		free(line);
+		line = get_next_line(fd);
+	}
+	free(line);
+	close(fd);
 }
