@@ -6,17 +6,33 @@
 /*   By: chorse <chorse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 15:38:14 by chorse            #+#    #+#             */
-/*   Updated: 2022/03/21 12:44:00 by chorse           ###   ########.fr       */
+/*   Updated: 2022/03/21 17:00:53 by chorse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philos.h"
 
+int mails = 0;
+pthread_mutex_t	entry_point;
+
 void *live(void *id)
 {
 	t_phil *philos;
+	long i;
+	struct timeval	tv;
+	long time;
 	
-	
+	gettimeofday(&tv, NULL);
+	printf("%ld\n", time);
+	i = 0;
+	while ((long *)i < &philos->time_life)
+	{
+		pthread_mutex_lock(&entry_point);
+		i++;
+		mails++;
+		pthread_mutex_unlock(&entry_point);
+	}
+	return (NULL);
 }
 
 void threads(t_base *data)
@@ -26,7 +42,7 @@ void threads(t_base *data)
 
 	threads = malloc(sizeof(pthread_t) * data->count);
 	i = 0;
-
+	while (i < data->count)
 	{
 		pthread_create(&threads[i], NULL, live, &data->philos[i]);
 		i++;
@@ -66,14 +82,14 @@ void parser(t_base *base, char **argv)
 int main(int argc, char **argv)
 {
 	t_base *phil;
-	pthread_mutex_t entry_point;
-	
+	// pthread_mutex_t	entry_point;
 	pthread_mutex_init(&entry_point, NULL);
 	phil = malloc(sizeof(t_base));
 	phil->count = ft_atoi(argv[1]);
 	parser(phil, argv);
 	threads(phil);
 	pthread_mutex_destroy(&entry_point);
-	return (0);
+	printf("MAILS = %d\n", mails);
 	free(phil);
+	return (0);
 }
